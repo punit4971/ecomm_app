@@ -7,8 +7,8 @@ replicaCount:
   rabbitmq: 1
 
 image:
-  backend: node:14
-  frontend: nginx:latest
+  backend: <backend image>
+  frontend: <frontend image>
   mongo: mongo:4.4
   rabbitmq: rabbitmq:3-management
 
