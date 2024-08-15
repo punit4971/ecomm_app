@@ -1,9 +1,11 @@
 
-Create Iam role for EKS & attach following policies to the role:
+**Create Iam role for EKS & attach following policies to the role:**
 * AmazonEKSClusterPolicy
 * AmazonEKSServicePolicy
 
-Create EKS Cluster using Console or CLI:
+
+**Create EKS Cluster using Console or CLI:**
+
 aws eks create-cluster \
   --name ecommerce-cluster \
   --region us-west-2 \
@@ -11,7 +13,8 @@ aws eks create-cluster \
   --role-arn arn:aws:iam::<account-id>:role/<eks-role> \
   --resources-vpc-config subnetIds=<subnet-ids>,securityGroupIds=<security-group-ids>
 
-Create a Node group:
+**Create a Node group:**
+
 aws eks create-nodegroup \
   --cluster-name ecommerce-cluster \
   --nodegroup-name ecommerce-nodes \
@@ -23,10 +26,12 @@ aws eks create-nodegroup \
   --node-role arn:aws:iam::<account-id>:role/<node-instance-role> \
   --region us-west-2
 
-Update Your Kubeconfig:
+**Update Your Kubeconfig:**
+
 aws eks update-kubeconfig --name ecommerce-cluster --region us-west-2
 
-Verify nodes:
+**Verify nodes:**
+
 kubectl get nodes
 
-Then, Deploy your application.
+**Then, Deploy your application.**
