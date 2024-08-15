@@ -32,12 +32,17 @@ We exposed Prometheus and Grafana using LoadBalancer service, They will be acces
 **For Debugging & Troubleshooting Scenarios added another debugging.md file.**
 
 
-**How To deploy,**
+
+
+**How To deploy**
+
 **Package your helm chart.**
 helm package .
 
+
 **Install the helm chart:**
 helm install ecommerce-app ./ecommerce-app-0.1.0.tgz
+
 
 **verify the delployment:**
 helm status ecommerce-app
