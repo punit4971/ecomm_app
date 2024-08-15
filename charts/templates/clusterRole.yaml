@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: psp-role
+  namespace: {{ .Values.namespace }}
+rules:
+- apiGroups: ["policy"]
+  resources: ["podsecuritypolicies"]
+  resourceNames: ["{{ .Values.security.pspName }}"]
+  verbs: ["use"]

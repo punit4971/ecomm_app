@@ -1,0 +1,63 @@
+namespace: ecommerce-app
+
+replicaCount:
+  backend: 3
+  frontend: 2
+  mongo: 3
+  rabbitmq: 1
+
+image:
+  backend: node:14
+  frontend: nginx:latest
+  mongo: mongo:4.4
+  rabbitmq: rabbitmq:3-management
+
+serviceAccount:
+  name: ecommerce-sa
+
+service:
+  backend:
+    port: 3000
+  frontend:
+    port: 80
+  mongo:
+    port: 27017
+  rabbitmq:
+    port: 5672
+
+ingress:
+  enabled: true
+  host: ecommerce.example.com
+
+persistence:
+  mongo:
+    storage: 10Gi
+  rabbitmq:
+    storage: 10Gi
+
+config:
+  DATABASE_URL: "mongodb://mongo-0.mongo,mongo-1.mongo,mongo-2.mongo:27017/ecommerce"
+  QUEUE_HOST: "rabbitmq"
+  QUEUE_PORT: "5672"
+
+secrets:
+  MONGO_INITDB_ROOT_USERNAME: mongodbadmin
+  MONGO_INITDB_ROOT_PASSWORD: password
+  RABBITMQ_DEFAULT_USER: rabbitmquser
+  RABBITMQ_DEFAULT_PASS: password
+
+autoscaling:
+  backend:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+  frontend:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+
+security:
+  enabled: true
+  pspName: restricted-psp

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount.backend }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - name: backend
+        image: {{ .Values.image.backend }}
+        ports:
+        - containerPort: {{ .Values.service.backend.port }}
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: ecommerce-config
+              key: DATABASE_URL
+        - name: QUEUE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: ecommerce-config
+              key: QUEUE_HOST
+        - name: QUEUE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: ecommerce-config
+              key: QUEUE_PORT

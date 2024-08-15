@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount.frontend }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - name: frontend
+        image: {{ .Values.image.frontend }}
+        ports:
+        - containerPort: {{ .Values.service.frontend.port }}
+        volumeMounts:
+        - name: frontend-content
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: frontend-content
+        configMap:
+          name: ecommerce-config

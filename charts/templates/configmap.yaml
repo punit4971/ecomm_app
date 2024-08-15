@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecommerce-config
+  namespace: {{ .Values.namespace }}
+data:
+  DATABASE_URL: {{ .Values.config.DATABASE_URL }}
+  QUEUE_HOST: {{ .Values.config.QUEUE_HOST }}
+  QUEUE_PORT: {{ .Values.config.QUEUE_PORT }}

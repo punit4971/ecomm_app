@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: {{ .Values.namespace }}
+spec:
+  serviceName: "mongo"
+  repliacs: {{ .Values.replicaCount.mongo }}
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: {{ .Values.image.mongo }}
+        ports:
+        - containerPort: {{ .Values.image.mongo }}
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+        env:
+        - name: MONGO_INIT_ROOT_USERNAME
+          valueFrom:
+            secretsKeyRef:
+              name: ecommerce-secrets
+              key: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretsKeyRef:
+              name: ecommerce-secrets
+              key: MONGO_INITDB_ROOT_PASSWORD
+
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-storage
+    spec:
+      accessModes: ["ReadWriteOnce"] 
+      resources:
+        requests:
+          storage: {{ .Values.persistence.mongo.storage }}   
