@@ -1,6 +1,8 @@
+**Step1**
+
 Create an IAM policy which define the required permissions for AWS Load Balancer Controller.
 
-Deploy ALB Controller:
+**Step2:**  **Deploy ALB Controller:**
 
 helm repo add eks https://aws.github.io/eks-charts
 
@@ -15,5 +17,6 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set region= us-west-2 \
   --set vpcId=<your-vpc-id>
 
-verify the deployment:
+**Step3:**  **verify the deployment:**
+
 kubectl get deployment -n kube-system aws-load-balancer-controller
