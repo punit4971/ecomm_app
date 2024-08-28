@@ -1,2 +1,1 @@
-# ecomm_app
-Deploying Ecomm app using Kubernetes
+This Branch is for CKA progress.
